@@ -1,0 +1,433 @@
+%%
+% Modificación de una plantilla de Latex para adaptarla al castellano.
+%%
+
+%%%%%%%%%%%%%%%%%%%%%
+% Thin Sectioned Essay
+% LaTeX Template
+% Version 1.0 (3/8/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original Author:
+% Nicolas Diaz (nsdiaz@uc.cl) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper, 11pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage[usenames,dvipsnames]{color} % Coloring code
+\usepackage{wrapfig} % Allows in-line images
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+% Imágenes
+\usepackage{graphicx} 
+
+\usepackage{amsmath}
+% para importar svg
+%\usepackage[generate=all]{svgfig}
+
+% sudo apt-get install texlive-lang-spanish
+\usepackage[spanish]{babel} % English language/hyphenation
+\selectlanguage{spanish}
+% Hay que pelearse con babel-spanish para el alineamiento del punto decimal
+\decimalpoint
+\usepackage{dcolumn}
+\newcolumntype{d}[1]{D{.}{\esperiod}{#1}}
+\makeatletter
+\addto\shorthandsspanish{\let\esperiod\es@period@code}
+\makeatother
+
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{supertabular}
+
+\usepackage{multicol}
+\newsavebox\ltmcbox
+
+% Para algoritmos
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsthm}
+
+% Para matrices
+\usepackage{amsmath}
+
+% Símbolos matemáticos
+\usepackage{amssymb}
+\usepackage{accents}
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage[section]{placeins} % Para gráficas en su sección.
+\usepackage[T1]{fontenc} % Required for accented characters
+\newenvironment{allintypewriter}{\ttfamily}{\par}
+\setlength{\parindent}{0pt}
+\parskip=8pt
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+\newcommand{\imagen}[2]{\begin{center} \includegraphics[width=90mm]{#1} \\#2 \end{center}}
+\newcommand{\RFC}[1]{\href{https://www.ietf.org/rfc/rfc#1.txt}{RFC-#1}}
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+\begin{center} % Center align
+{\Huge\@title} % Increase the font size of the title
+\end{center}
+
+\vspace{20pt} % Some vertical space between the title and author name
+
+\begin{flushright} % Right align
+{\large\@author} % Author name
+\\\@date % Date
+
+\vspace{40pt} % Some vertical space between the author block and abstract
+\end{flushright}
+}
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Instalación de SO y Configuración de RAID}\\ % Title
+\vspace{20 pt}
+Cuestiones de la Práctica 1} % Subtitle
+
+\author{\textsc{Lothar Soto Palma} % Author
+\\{\textit{Universidad de Granada}}} % Institution
+
+\date{\today} % Date
+
+%----------------------------------------------------------------------------------------
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+\listoffigures
+\section{Información}
+Cuestionario del guión de la práctica 1:
+Las entradas de los índices están vinculados a su página correspondiente solo es necesario pinchar en ellos.
+Las referencias se encuentran al final del documento, en las cuestiones viene indicado el número de la referencia que se ha usado para responder pero normalmente están mezclados puesto que se tomó información de todas las referencias. Hay un enlace que por algún motivo hay una ''\textbf{ñ}'' en él y no se hace correctamente el hipervínculo, está indicado al final en las referencias. Por último la referencia usada en la cuestión 4 es un archivo pdf de microsoft.com, por lo que pongo el enlace a la web de donde descargué dicho archivo.
+\section{Cuestión 1}
+¿Qué modos y tipos de “Virtualización Hardware” existen?\\
+\textbf{Solución:}\\
+En primer lugar la virtualización hardware es una \{2\} técnica de simulacion de computadores lógicos o sistemas operativos. A continuación vemos los distintos tipos:
+\begin{itemize}
+\item[-]Virtualización Hardware: \{1\} Es el tipo de virtualización más complejo consiste en emular, haciendo uso de máquinas virtuales, los componentes hardware, por lo que el sistema operativo no se ejecuta sobre un harware real sino por uno virtual simulado.
+\item[-]Virtualización a nivel se SO: \{1\} En este caso no se virtualiza el hardware y se ejecuta una única instancia de sistema operativo sobre el que se van ha ejecutar servidores virtuales.
+\item[-]Virtualización parcial: \{2\} La máquina virtual simula multiples instancias compuestas en su mayoria por un entorno hardware, en especial los espacios de direcciones, no todo el sistema operativo podrá funcionar en estas máquinas pero si muchas de sus aplicaciones.  
+\item[-]Paravirtualización: \{1\} No es necesario simular el hardware, consisten en ejecutar sistemas operativos huéspedes (guest) sobre otro sistema operativo anfitrion (funciona como un Hipervisor), los SO huesped se comunican con el hipervisor para lograr la virtualización.
+\item[-]Virtualización Completa: \{1\} Es similar a la Paravirtualización sin embargo se diferencian en que la virtualización completa no necesita de comunicación con el hipervisor.
+\end{itemize}
+
+\section{Cuestión 2}
+Busque en Internet ofertas de servicios de, al menos, dos proveedores de VPS (Virtual Private Server) y compare con el precio de alquiler del servicio, con el de uso de servidores dedicados (administrados y no administrados) de características similares.\\
+\textbf{Solución:}\\
+Proveedor: Bluehost.com\\
+\{2\} Coste de Virtual Private Server: 119.99\$\\
+\{1\} Coste de Servidor Dedicado (administrado): 149.99\$\\
+Proveedor: Hostgator.com\\
+\{3\} Coste de Virtual Private Server: 129.95\$\\
+\{4\} Coste de Servidor Dedicado (administrado): 174\$\\
+\begin{table}[h]
+	\begin{tabular}{|c|c|c|}
+	\hline 
+	Bluehost.com & VPS & Dedicated Server \\ 
+	\hline 
+	CPUs & 4 & 4 \\ 
+	\hline 
+	Capacidad& 240GB & 1TB(mirrored) \\ 
+	\hline 
+	RAM & 8GB & 4GB \\ 
+	\hline 
+	Ancho de banda & 4TB & 5TB \\ 
+	\hline 
+	Dominios & 1 & 1 \\ 
+	\hline 
+	Direcciones IP & 2 & 3 \\ 
+	\hline 
+	Administración & 24/7 & 24/7 \\ 
+	\hline 
+	\end{tabular}
+\end{table} 
+\begin{table}[h]
+	\begin{tabular}{|c|c|c|}
+	\hline 
+	Hostgator.com & VPS & Dedicated Server \\ 
+	\hline 
+	CPUs & 2 & 2 \\ 
+	\hline 
+	Capacidad& 165GB & 500GB(RAID 1) \\ 
+	\hline 
+	RAM & 4GB & 4GB \\ 
+	\hline 
+	Ancho de banda & 2TB & 10TB \\ 
+	\hline 
+	Direcciones IP & 2 & 2 \\ 
+	\hline 
+	Administración & Control panel & Control Panel \\ 
+	\hline 
+	\end{tabular}
+\end{table} 
+
+\section{Cuestión 3}
+Busque dos soluciones de VMSW alternativas a las propuestas de VMWare y Virtual Box. Explique sus principales características y diferencias con las soluciones que vamos a emplear en clase.\\
+\textbf{Solución:}
+\begin{itemize}
+\item[-] Parallels desktop:
+	\{1\} Se trata de un sistema de Virtualización de Hardware, en la que cada máquina virtual funciona de manera independiente con prácticamente todos los recursos de un equipo físico, una gran ventaja es el uso compartido de controladores que fomenta la portabilidad de las MV de un equipo a otro, la principal diferencia con VMware y VirtualBox es que está pensada para equipos Mac y por tanto lo convierte en un software util para los que usan Mac OS X.
+\item[-] CoLinux:
+	\{2\} La principal característica de CoLinux es que es un software que permite ejecutar de forma paralela Microsoft Windows y Linux, esto lo consigue haciendo uso de CVM o Cooperative Virtual Machine, que consiste en compartir los recursos que ya existen en el sistema operativo. Es distinto de otras soluciones como VMware o VirtualBox pues que normalmente estos trabajan para hacer funcionar el SO huésped con un menor privilegio que el anfitrión, pero CoLinux tiene desventajas como la seguridad o bién la estabilidad ya que depende en gran medida del SO anfitrión.
+\end{itemize}
+\section{Cuestión 4}
+Enumere las cinco innovaciones en Windows 2012 R2 respecto a 2008 R2 que considere más importantes.\\
+\textbf{Solución:}\\
+\begin{itemize}
+\item[-]Acceso de control dinámico: Se crean nuevas formas de acceso a los datos de archivos, además el control se centraliza y permite restringir el acceso a archivos importantes.
+\item[-]Bajo coste, y almacenamiento de archivos basados en alta disponibilidad: Windows server 2012 introduce SMB 3.0 un protocolo de red que permite compartir archivos entre otros equipos de una red.
+\item[-]Virtualización de red (Hiper-V): Windows server 2012 tiene la capacidad de aislar el tráfico de la red  de diferentes unidades que están ocupadas.
+\item[-]Permite migrar máquinas virtuales entre host que usen Hiper-V en diferentes clusters o servidores sin almacenamiento compartido.
+\item[-]Windows PowerShell 3.0 tiene una notable mejora en la versión 2012 puesto que soporta más de 2300 command-lets, son scripts que realizan diversas funcionalidades.
+\end{itemize}
+\section{Cuestión 5}
+¿Qué empresa hay detrás de Ubuntu? ¿Qué otros productos/servicios ofrece? ¿Qué es MAAS (https://maas.ubuntu.com/) ?\\
+\textbf{Solución:}\\
+Tras ubuntu se encuentra la empresa Canonical, \{1\}''Compañía britanica propiedad del empresario Mark Shuttleworth''. \{2\} \{3\} Ofrece productos como: Ubuntu para teléfonos y tablets, Ubuntu TV, Ubuntu One, Ubuntu Cloud, Mir o Launchpad, y otros servicios como JuJu o MAAS. \{4\} MAAS es un servicio que se encarga de tomar servidores físicos que se podrán usar en demanda, es decir, consiste tomar un conjunto de servidores físicos para que actuen como una nube con maquinas virtuales lo haría, en mi opinión sirve para despegarse de la virtualización y crear un sistema más robusto.
+\section{Cuestión 6}
+¿Qué relación guardan las distribuciones de Linux CentOS, Fedora y RedHat Enterprise Linux? Comente las similitudes y diferencias que le parezcan más significativas.\\
+\textbf{Solución:}\\
+\{1\}\{2\} La relación es la siguiente: Fedora es el proyecto principal y está basado en comunidad, es decir, las distribuciones son gratuitas centradas en sacar rápidas versiones con nuevas funcionalidades, ahora bién Redhat está basado en Fedora, solo que se trata de una versión comercial y no es gratuito puesto que viene con soporte para sus distribuciones, por último CentOS es básicamente la versión de comunidad de Redhat solo que es gratuita puesto el soporte viene proporcionado por la misma comunidad.
+
+\begin{itemize}
+\item[-]Similitudes:
+	\begin{itemize}
+	\item Los trés están basados en Fedora.
+	\item Fedora y CentOS estan dirigidos por la comunidad.
+	\item Fedora y CentOS son gratuitos.
+	\end{itemize}
+\item[-]Diferencias:
+	\begin{itemize}
+	\item Redhat es una versión comercial(coste por soporte).
+	\item Redhat se centra en sacar distribuciones mas estables y Fedora en nuevas funcionalidades.
+	\item CentOS es parecido a Redhat solo que no tiene coste por el soporte.
+	\end{itemize}
+\end{itemize} 
+
+\section{Cuestión 7}
+Busque indicadores de porcentaje de uso global o de cuota de mercado de SO de Servidores. No olvide poner la fuente de donde saca la información y preste atención a la fecha de ésta.\\
+\textbf{Solución:}\\
+\{1\} \{2\} \{3\} Según la fuente de información el porcentaje de uso global de los sistemas operativos es:
+\begin{itemize}
+\item[-] UNIX: 67.7\%
+	\begin{itemize}
+	\item Linux: 53\%
+	\item BSD: 1.4\%
+	\item Darwin: menos de 0.1\%
+	\item HP-UX: menos de 0.1\%
+	\item Solaris: menos de 0.1\%
+	\item Unknown: 45\%
+	\end{itemize}
+\item[-] Windows: 32.3\%
+\end{itemize}
+
+\section{Cuestión 8}
+a) ¿De qué es el acrónimo RAID? b) ¿Qué tipos de RAID hay? c) ¿Qué diferencia hay entre RAID mediante SW y mediante HW?\\
+\textbf{Solución:}\\
+\begin{itemize}
+\item[a)] \{2\}El acrónimo RAID es Redundant Array of Independent Disks o conjunto rebundante de discos independientes que hace referencia a un sistema de almacenamiento de datos que usa múltiples discos duros, sean o no de SSD, en los que los datos se replican y sirve normalmente para tener seguridad ante los fallos del sistema ante la pérdida de datos.
+\item[b)] De entre los tipos de raid vamos a desarrollar algunos de los más importantes niveles del RAID estandar:
+	\begin{itemize}
+	\item[-] \{2\} RAID 0: (Volumen dividido) Se encarga de distribuir los datos entre dos o más discos, de manera equitativa, es decir, los mismos datos no se encuentran en los dos discos.
+	\item[-] \{2\} RAID 1: (Espejo) Se encarga de realizar una copia exacta de los datos de un disco duro en otros discos. 
+	\item[-] \{3\} RAID 5: (Distribuido con Paridad) Se encarga de distribuir los datos entre dos o más discos incluyendo su información de paridad que pueden servir para detectar errores o para recrear datos que se perdieron en una sola unidad.
+	\end{itemize}
+Otros pueden ser por ejemplo los pertenecientes al RAID anidado o propietarios:
+	\begin{itemize}
+	\item[-] RAID 0+1
+	\item[-] RAID 1+0
+	\item[-] RAID 100
+	\item[-] RAID 50EE
+	\item[-] ...
+	\end{itemize}
+\item[c)] \{1\} El RAID por hardware hace uso de dispositivos de almacenamiento físicos y es el más usado, sin embargo es caro a diferencia del RAID software que crea dichos dispositivos de manera virtual, es más lento pero más flexible y tiene menos puntos de error que tiene el RAID hardware hade uso de una controladora para los discos denominada Controladora RAID y por tanto se le añade una posibilidad de fallo a dicha controladora.
+\end{itemize}
+
+\section{Cuestión 9}
+a) ¿Qué es LVM? b)¿Qué ventaja tiene para un servidor de gama baja? c) Si va a tener un servidor web, ¿le daría un tamaño grande o pequeño a /var?\\
+\textbf{Solución:}\\
+\begin{itemize}
+\item[a)] \{1\} LVM(lógical Volumes Manager) o administrador de volúmenes lógicos sirve para el kernel de linux que gestiona unidades de disco y dispositivos de almacenamiento masivo, además hace posible crear un espacio de almacenamiento abstracto, por lo que es más facil aumentar o disminuir el tamaño de las particiones y eliminar o crear particiones evitando problemas de posicionamiendo.
+\item[b)] \{2\} El particionamiento del disco en GNU/Linux es uno de los grandes problemas puesto que si se realiza sin LVM el esquema de particionado que se haya establecido no es sencillo de redimensionar normalmente es necesario reformatear para cambiar dicho esquema, entonces la ventaja de LVM es que si tienes un esquema de particionamiento y algunas de las particiones se llenan, es posible una redimensión puesto que son particiones lógicas, y esto puede beneficiar a los servidores cuyas particiones se vean sin capacidad puesto que se usaría espacio de otras que estén libres para aumentar el tamaño.
+\item[c)] La carpeta ''/var'' tiene información de datos que cambian al ejecutarse el sistema, en el caso de un servidor web precisamente se trata con ''/var/www'', en mi opinión si el sistema no usa LVM el espacio para ''/var/'' debe ser grande puesto como la información va cambiando puede aumentar mucho el tamaño y si es pequeño necesitaras realizar una limpieza o formatearlo para redimensionar, en el caso de que el sistema use LVM la asignación tendrá que ser más o menos adecuada para que no se complete el volumen muy rápido pero como se puede redimensionar no es necesario asignar un tamaño muy grande en un inicio. 
+\end{itemize}
+
+\section{Cuestión 10}
+¿Es conveniente cifrar también el volumen que contiene el espacio para swap? ¿Por qué no es posible cifrar el volumen en el que montaremos /boot?\\
+\textbf{Solución:}\\
+\{1\} Si es conveniente para proteger datos que se intercambian desde memoria, como ejemplo una aplicación que haga uso de passwords mientras se encuentren en memoria serán limpiadas de la misma despues de un reinicio, pero es posible que el sistema operativo empiece a intercambiar con el disco dichas passwords con el objetivo de liberar memoria para otras aplicaciones, y al no estar encriptado swap seria posible acceder a ellas.
+\{2\} No es posible cifrar el volumen en el que se monta /boot puesto que no se puede arrancar desde un volumen cifrado, y por tanto es necesario una partición que no este encriptada para el arranque.
+
+\section{Cuestión 11}
+¿Cuál es la diferencia más significativa entre ext3 y ext2?\\
+\textbf{Solución:}\\
+\{1\} La diferencia más importante entre ext2 y ext3 es que ext3 usa registro por diario o "journaling", es un registro que almacena la información que sirve para restablecer datos dañados, además otra diferencia muy importante es que usa un árbol AVL. Un dato importante es que ext3 se puede usar como si fuera ext2.
+\section{Cuestión 12}
+Muestre cómo ha quedado el disco particionado una vez el sistema está instalado.\\
+\textbf{Solución:}\\
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{12} 
+\caption{Particiones de disco del sistema.} 
+\label{contexto:figura} 
+\end{figure}
+\section{Cuestión 13}
+a) ¿Cómo ha hecho el disco 2 “arrancable”? ¿Qué hace el comando grub-install?\\
+\textbf{Solución:}\\
+El segundo disco se puede hacer arrancable (bootable) haciendo uso de la orden: "\textit{grub-install /dev/sdb}" donde sdb es el segundo disco tal y como podemos apreciar en la figura 1. \{1\}Grub-install instala grub en un dispositivo, y \{2\} grub es un gestor de arranque que ha sido desarrollado por GNU y permite iniciar con distintos sistemas operativos en un mismo equipo.
+
+\section{Cuestión 14}
+¿Cuál es la principal diferencia hay entre las versiones Standard y Datacenter de Windows 2012?\\
+\textbf{Solución:}\\
+La principal difecencia es el número de máquinas virtuales que se le permite al usuario usar, en la version Standard se pueden llegar a usar al menos 2 MVs y en la versión Datacenter se pueden ejecutar un número ilimitado de ellas, además como dato las licencias de ambas versiones cubren hasta dos procesadores físicos.
+\section{Cuestión 15}
+Continúe usted con el proceso de definición de RAID1 para los dos discos de 50MiB que ha creado. Muestre el proceso con capturas de pantalla.\\
+\textbf{Solución:}\\
+En primer lugar creamos los nuevos discos, nos dirigimos al administrador de equipos y vemos los dos nuevos discos sin asignar, tenemos que hacer los discos dinámicos para ello buscamos la opción en el disco 1 "\textit{convertir a dinámico}", ahora creamos un nuevo volumen simple  y por último agregamos su reflejo y ya tenemos configurado el RAID 1.
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{Untitled} 
+\caption{Estado inicial de los discos.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{Untitled2} 
+\caption{Creando discos dinámicos.} 
+\vspace{-0.2cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{Untitled3} 
+\caption{Creando nuevos volúmenes.} 
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{Untitled4} 
+\caption{Agregamos el reflejo.} 
+\vspace{-0.2cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{Untitled5} 
+\caption{Seleccionamos donde queremos crear el reflejo.}
+\vspace{-0.2cm} 
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{Untitled6} 
+\caption{Estado final del RAID 1.}
+\vspace{-0.2cm} 
+\label{contexto:figura} 
+\end{figure}
+
+\section{Cuestión 16}
+Configure la red virtual entre las máquinas Guest y Host de forma que haya comunicación de red entre ellas y la máquina Guest pueda acceder a Internet empleando la conexión de la máquina Host. Explique las opciones de configuración posibles, y la elegida. Muestre con capturas de pantalla cómo queda la configuración de la red y cómo comprueba la conectividad entre máquinas y el acceso a Internet.\\
+\textbf{Solución:}\\
+
+En primer lugar cambiamos el tipo de configuración del controlador de red que está por defecto en NAT que permite al sistema guest acceder a la red a través de la dirección IP del host, se crea una conexión entre el guest y el host, normalmente sirve para uso sencillo de la red. A nosotros nos interesa, como podemos ver en la figura 8, la configuración adaptador puente que conecta la máquina virtual a la red Ethernet externa pero la máquina (o SO guest) tiene una dirección IP propia y los equipos de la red local se pueden comunicar con el SO guest. En mi caso hacemos uso de el controlador en1: WI-FI (Airport) puesto que es el que me ha dado un resultado correcto. Podemos apreciar que se escuchan entre si con la figura 9 y 10.
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{13} 
+\caption{Configuración de red de la máquina virtual.}
+\vspace{-0.2cm} 
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{14} 
+\caption{Ping de la máquina al host.}
+\vspace{-0.2cm} 
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{15} 
+\caption{Ping del host a la máquina.}
+\vspace{-0.2cm} 
+\label{contexto:figura} 
+\end{figure}
+
+
+\pagebreak
+\begin{thebibliography}{X}
+\bibitem{Baz} Cuestión 1:\\ 
+ \textbf{1.}\url{https://blog.smaldone.com.ar/2008/09/20/virtualizacion-de-hardware/ }\\
+ \textbf{2.}\url{http://en.wikipedia.org/wiki/Hardware_virtualization#Operating-system-level_virtualization}
+\bibitem{Baz} Cuestión 2:\\ 
+ \textbf{1.}\url{http://www.bluehost.com/dedicated}\\
+ \textbf{2.}\url{http://www.bluehost.com/vps}\\
+ \textbf{3.}\url{http://www.hostgator.com/vps-hosting}\\
+ \textbf{4.}\url{http://www.hostgator.com/dedicated}
+\bibitem{Baz} Cuestión 3:\\
+ \textbf{1.}\url{http://es.wikipedia.org/wiki/Parallels_Desktop_para_Mac#Caracter.C3.ADsticas_T.C3.A9cnicas}\\
+ \textbf{2.}\url{http://es.wikipedia.org/wiki/Cooperative_Linux#Hardware_emulado}
+\bibitem{Baz} Cuestión 4:\\
+	\textbf{1.}\url{http://www.microsoft.com/en-us/download/details.aspx?id=41703}
+\bibitem{Baz} Cuestión 5:\\
+	\textbf{1.}\url{http://es.wikipedia.org/wiki/Canonical}\\
+	\textbf{2.}\url{http://www.canonical.com/products}\\
+	\textbf{3.}\url{http://www.canonical.com/services}\\
+	\textbf{4.}\url{http://maas.ubuntu.com}
+\bibitem{Baz} Cuestión 6:\\
+	\textbf{1.}\url{https://danielmiessler.com/study/fedora_redhat_centos/}\\
+	\textbf{2.}\url{http://es.wikipedia.org/wiki/CentOS}
+\bibitem{Baz} Cuestión 7:\\
+	\textbf{1.}\url{http://w3techs.com/technologies/overview/operating_system/all}\\
+	\textbf{2.}\url{http://w3techs.com/technologies/details/os-unix/all/all}\\
+	\textbf{3.}\url{http://w3techs.com/technologies/details/os-linux/all/all}
+\bibitem{Baz} Cuestión 8:\\
+	\textbf{1.}\url{http://www.informatica-hoy.com.ar/hardware-pc-desktop/Los-niveles-de-RAID.php}\\
+	\textbf{2.}\url{http://es.wikipedia.org/wiki/RAID}\\
+	\textbf{3.}\url{http://www.intel.com/support/sp/chipsets/imsm/sb/cs-009337.htm#raid5}
+\bibitem{Baz} Cuestión 9:\\
+	(Cuidado el enlace tiene una ''ñ'')\textbf{1.}\url{https://wiki.archlinux.org/index.php/LVM_(Español)#Bloques_para_construir_LVM}\\
+	\textbf{2.}\url{http://glatelier.org/2010/01/19/lvm-en-gnulinux-parte-i-que-es-y-a-quien-le-sirve/}
+\bibitem{Baz} Cuestión 10:\\
+	\textbf{1.}\url{http://askubuntu.com/questions/313564/why-encrypt-the-swap-partition}\\
+	\textbf{2.}\url{http://byte-inside.blogspot.com.es/2011/09/la-paranoia-full-encriptando-discos-lvm.html}
+\bibitem{Baz} Cuestión 11:\\
+	\textbf{1.}\url{http://www.alcancelibre.org/staticpages/index.php/como-optimizar-ext3}
+\bibitem{Baz} Cuestión 13:\\
+	\textbf{1.}\url{http://linux.die.net/man/8/grub-install}\\
+	\textbf{2.}\url{http://es.wikipedia.org/wiki/GNU_GRUB}
+\bibitem{Baz} Cuestión 14:\\
+	\textbf{1.}\url{http://www.internetya.co/windows-server-2012-ediciones-datacenter-y-standard/}
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,638 @@
+%%
+% Modificación de una plantilla de Latex para adaptarla al castellano.
+%%
+
+%%%%%%%%%%%%%%%%%%%%%
+% Thin Sectioned Essay
+% LaTeX Template
+% Version 1.0 (3/8/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original Author:
+% Nicolas Diaz (nsdiaz@uc.cl) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper, 11pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage[usenames,dvipsnames]{color} % Coloring code
+\usepackage{wrapfig} % Allows in-line images
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+% Imágenes
+\usepackage{graphicx} 
+
+\usepackage{amsmath}
+% para importar svg
+%\usepackage[generate=all]{svgfig}
+
+% sudo apt-get install texlive-lang-spanish
+\usepackage[spanish]{babel} % English language/hyphenation
+\selectlanguage{spanish}
+% Hay que pelearse con babel-spanish para el alineamiento del punto decimal
+\decimalpoint
+\usepackage{dcolumn}
+\newcolumntype{d}[1]{D{.}{\esperiod}{#1}}
+\makeatletter
+\addto\shorthandsspanish{\let\esperiod\es@period@code}
+\makeatother
+
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{supertabular}
+
+\usepackage{multicol}
+\newsavebox\ltmcbox
+
+% Para algoritmos
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsthm}
+
+% Para matrices
+\usepackage{amsmath}
+
+% Símbolos matemáticos
+\usepackage{amssymb}
+\usepackage{accents}
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage[section]{placeins} % Para gráficas en su sección.
+\usepackage[T1]{fontenc} % Required for accented characters
+\newenvironment{allintypewriter}{\ttfamily}{\par}
+\setlength{\parindent}{0pt}
+\parskip=8pt
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+\newcommand{\imagen}[2]{\begin{center} \includegraphics[width=90mm]{#1} \\#2 \end{center}}
+\newcommand{\RFC}[1]{\href{https://www.ietf.org/rfc/rfc#1.txt}{RFC-#1}}
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+\begin{center} % Center align
+{\Huge\@title} % Increase the font size of the title
+\end{center}
+
+\vspace{20pt} % Some vertical space between the title and author name
+
+\begin{flushright} % Right align
+{\large\@author} % Author name
+\\\@date % Date
+
+\vspace{40pt} % Some vertical space between the author block and abstract
+\end{flushright}
+}
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Instalación y configuración de Servicios}\\ % Title
+\vspace{20 pt}
+Cuestiones de la Práctica 2} % Subtitle
+
+\author{\textsc{Lothar Soto Palma} % Author
+\\{\textit{Universidad de Granada}}} % Institution
+
+\date{\today} % Date
+
+%----------------------------------------------------------------------------------------
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+\listoffigures
+\section{Información}
+Para la gran mayoria de ejercicios se ha realizado con dos máquinas virtuales una con ubuntu y otra con CentOS configuradas para que puedan verse entre ellas. Además para no tener problemas con el firewall este ha sido desactivado (en CentOS). Por último en la cuestión 4 no he sido capaz de encontrar el archivo apt.conf me parecio extraño así que use la modificación de la variable global.
+\section{Cuestión 1}
+Proporcione ejemplos de llamada a a yum para buscar, instalar y eliminar paquetes (Pista: man yum)\\
+\textbf{Solución:}\\
+Yum es un gestor de paquetes basado en rpm (Gestor de paquetes para sistemas como redhat, centOS, fedora...) que nos permite instalar, buscar, borrar paquetes además de otras entradas que permiten listar paquetes instalados o que se encuentran a disposición del usuario. Ejemplos de llamada de yum:
+\begin{itemize}
+\item[-] \textit{yum install php-common.x86\_64}: Permite instalar el paquete indicado, pide confirmación al usuario.
+\item[-] \textit{yum -y install php-common.x86\_64}: Igual que el anterior pero no es necesaria una confirmación del usuario.
+\item[-] \textit{yum remove php-common.x86\_64}: Elimina el paquete indicado, es necesaria confirmacón del usuario.
+\item[-] \textit{yum -y remove php-common.x86\_64}: Igual que el anterior pero no es necesaria confirmación del usuario.
+\item[-] \textit{yum list installed}: Permite listar los paquetes que se encuentran instalados en el sistema.
+\item[-] \textit{yum list available}: Permite listar los paquetes que pueden ser instalados en el sistema.
+\item[-] \textit{yum search php}: Busca un paquete instalado o que se puedan instalar, puede funcionar solo con partes del nombre del paquete.
+\end{itemize}
+\section{Cuestión 2}
+¿Qué ha de hacer para que yum pueda tener acceso a Internet a través de un proxy?(Pistas: archivo de configuración en \textit{/etc}, proxy: stargate.ugr.es:3128). ¿Cómo añadimos un nuevo repositorio?\\
+\textbf{Solución:}\\
+\{1\}Para que yum tenga acceso a Internet a través de un proxy es necesario añadir al archivo yum.conf que se encuentra en \textit{/etc} las siguientes líneas:
+\begin{verbatim}
+# The proxy server - proxy server:port number 
+proxy=http://stargate.ugr.es:3128 
+# The account details for yum connections 
+proxy_username=
+proxy_password=
+\end{verbatim}
+No es necesario usar los parámetros de usuario y contraseña por lo que se pueden dejar en blanco. Para añadir un repositorio se puede hacer de varias formas una de ellas es dirigirse al directorio \textit{/etc/yum.repos.d/} y colocar ahí los archivos con esta estructura: [nombre].repo, pero hay una herramienta llamada \textit{yum-config-manager} que agrega los repositorios directamente haciendo uso del url del mismo.
+\section{Cuestión 3}
+Proporcione ejemplos de comandos para buscar un paquete en un repositorio y el correspondiente para instalarlo. (Pista: man apt-get ; man apt-cache)\\
+\textbf{Solución:}\\
+Apt es otra aplicación de gestión de paquetes como yum pero se usa en distribuciones basadas en debian, ejemplos de ordenes para instalar y buscar estos paquetes son los siguientes:
+\begin{itemize}
+\item[-] \textit{apt-cache show [nombrepkg]}: Nos muestra si el paquete en cuestión existe o no en el sistema, es decir te retorna una respuesta de verdadero o falso.
+\item[-] \textit{apt-cache search [exp. regular]}: Nos permite realizar una consulta sobre el sistema para saber los paquetes que se encuentran disponibles para su instalación.
+\item[-] \textit{apt-cache policy [nombrepkg]}: Se encarga de a partir de un nombre de paquete dado, comprobar que dependencia o repositorio lo contiene para su posterior obtención.
+\item[-] \textit{apt-get install [nombrepkg]}: Se encarga de instalar un paquete solo si este se encuentra en algún repositorio dentro de \textit{sources.list.}
+\end{itemize}
+\section{Cuestión 4}
+Indiqué como debe modificar la configuracón de apt para acceder a los repositorios a través del proxy. ¿Cómo añadimos un nuevo repositorio?\\
+\textbf{Solución:}\\
+\{2\} Para acceder a los repositorios a través de un proxy debemos dirigirnos al archivo \textit{apt.conf} en el directorio \textit{/etc/apt/} y añadir al archivo la siguiente linea:
+\begin{verbatim}
+Acquire::http::Proxy "http://usuario:password@proxy.servidor.org:puerto";
+\end{verbatim}
+Tambiés es posible llevarlo a cabo a través de la modificación de una variable global llamada \textit{http\_proxy}, de la forma siguiente:
+\begin{verbatim}
+export http_proxy=http://usuario:password@proxy.servidor.org:puerto/
+\end{verbatim}
+\{1\} Para añadir un nuevo repositorio tenemos varias opciones, una de ellas es localizar el archivo \textit{/etc/apt/sources.list}, y añadir a dicho archivo los repositorios que queramos, o bien podemos hacer uso del siguiente comando:
+\textit{add-apt-repository ppa:[usuario]/[nombre repo]} o bién \textit{add-apt-repository "deb [url repo][distro][componentes]"}.
+
+\section{Cuestión 5}
+¿Qué diferencia hay entre telnet y ssh?\\
+\textbf{Solución:}\\
+\{1\} Ambos telnet y ssh son protocolos de acceso a máquinas remotas a traves de una red, y permiten controlar dicha máquina a través de un intérprete de comandos, la principal diferencia entre ellos es la seguridad, ya que aunque ssh funciona de manera parecida a telnet, este usa técnicas de cifrado sobre la información que está viajando por el medio de comunicación (red), hace que estos datos no sean legibles para evitar problemas como man in the middle, una tercera persona que intercepta una red entre dos nodos y pueda modificar los paquetes tcp. Así se hace casi imposible obtener información privada tales como contraseñas.
+\section{Cuestión 6}
+Modifique la configuración de SSH para que impida el acceso remoto del usuario root y cambie el puerto por defecto. Indique las líneas modificadas en el fichero de configuración y ponga de manifiesto el cambio mediante capturas de pantallas en las que se aprecie el comportamiento antes y después de los cambios. Tenga en cuenta que debe reiniciar el servicio para que tome los cambios.\\
+\textbf{Solución:}\\
+Para realizar el ejercicio me he basado en \{1\}. Además se ha configurado otra máquina virtual con sistema operativo Ubuntu en una red con la máquina virtual CentOS con el servidor ssh, ambas tienen una configuración de dos adaptadores de red uno de ellos es adaptador-anfitrión y otra NAT para que se puedan ver entre ellas.\\
+
+En primer lugar iniciamos el servidor de ssh con la linea de comando:
+\begin{verbatim}
+service sshd start
+\end{verbatim}
+En primer lugar vamos a cambiar el puerto para ello hay que modificar el archivo \textit{/etc/ssh/sshd\_config}, esta es la parte que nos interesa modificar: 
+\begin{verbatim}
+# If you want to change the port on a SELinux system, you have to tell
+# SELinux about this change.
+# semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
+#
+#Port 22
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+\end{verbatim}
+Debemos modificarla de la siguiente manera:
+\begin{verbatim}
+# If you want to change the port on a SELinux system, you have to tell
+# SELinux about this change.
+# semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
+#
+Port 2222
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+\end{verbatim}
+Ahora después de cambiar el puerto necesitamos indicar al sistema que el puerto de escucha ha cambiado para ello hay que usar la linea de comando que indica el mismo archivo de configuración:
+\begin{verbatim}
+semanage port -a -t ssh_port_t -p tcp 2222
+\end{verbatim}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{6_1} 
+\caption{Conexión desde otra máquina via ssh puerto 22.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{6_3} 
+\caption{Conexión desde otra máquina via ssh puerto 2222.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\newpage
+Por último para configurar que no se pueda acceder al usuario root de forma remota  buscamos la opción permitRootLogin:
+\begin{verbatim}
+# Authentication:
+
+#LoginGraceTime 2m
+#PermitRootLogin yes
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+\end{verbatim}
+Y debemos de cambiar yes por no:
+\begin{verbatim}
+# Authentication:
+
+#LoginGraceTime 2m
+PermitRootLogin no
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+\end{verbatim}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{6_2} 
+\caption{Conexión via ssh por puerto 22 y con acceso a root.} 
+\vspace{-0.3cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{6_4} 
+\caption{Conexión via ssh por puerto 2222 y sin acceso a root.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\section{Cuestión 7}
+Configure una instancia de Linux de forma que pueda acceder remotamente (desde otra instancia o desde su anfitrión) sin introducir contraseña (Pistas: ssh-keygen, ssh-copy-id). Documente el proceso que ha seguido indicando y explicando los comandos utilizados así como posibles cambios en la configuración del servicio. Muestre con capturas de pantalla que puede conectar al servidor ssh remoto sin introducir contraseña.\\
+\textbf{Solución:}\\
+Para realizar el ejercicio me he basado en \{1\}. Además se ha configurado otra máquina virtual con sistema operativo Ubuntu en una red con la máquina virtual CentOS con el servidor ssh, ambas tienen una configuración de dos adaptadores de red uno de ellos es adaptador-anfitrión y otra NAT para que se puedan ver entre ellas.\\
+
+Para poder acceder a nuestro usuario en otro computador a través de ssh sin hacer tener que poner siempre nuestra clave tenemos que realizar los siguientes pasos:
+\begin{enumerate}
+\item Generamos una clave RSA con el comando "ssh-keygen", una clave RSA es una clave pública generada por un algoritmo de encriptación llamado Algoritmo RSA, que se basa en la factorización en numeros primos de números grandes, la seguridad de este algoritmo consiste en que la operación de calculo de la clave pública es sencillo pero su inversa no es factible a no ser que se conozca la clave privada a partir de la cual se aplicó el algoritmo RSA (figura 5).
+\item Ahora bién tenemos que hacer que dicha clave pública se copie en el servidor ssh para ello hacemos uso del comando "ssh-copy-id lot94@192.168.56.102" de esta manera, esta será la última vez que introduzcamos la clave, es posible que en algunas distribuciones sea necesario indicar la ruta de la clave pública por defecto \textit{/[user]/.ssh/id\_rsa.pub} (figura 6).
+\item También se le puede añadir una clave a la clave pública por lo que tan solo tendríamos que recordar dicha clave pero esto es opcional, ya tendriamos acceso al usuario sin especificar contraseña (figura 7).
+\end{enumerate}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{7_1} 
+\caption{Generando una clave RSA.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{7_2} 
+\caption{Copiando la clave RSA en el servidor ssh.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{7_3} 
+\caption{Acceso sin contraseña.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+
+\section{Cuestión 8}
+En muchas ocasiones es necesario reiniciar un servicio para que tome los cambios en su configuración. Indique los comandos que puede emplear en Ubuntu y CentOS para hacerlo.\\
+\textbf{Solución:}\\
+\{2\} En ubuntu y fedora y sus derivados, hay varias formas de iniciar los servicios, una de ellas es accediendo al script necesario que controla dicho servicio que normalmente se encuentra en /etc/init.d (se aloja en este directorio durante la instalación), por lo que los comandos de inicio, parada y reinicio de un servicio podrían ser los siguientes:
+\begin{center}
+\begin{verbatim}
+/etc/init.d/httpd start
+/etc/init.d/httpd stop
+/etc/init.d/httpd restart
+\end{verbatim}
+\end{center}
+\{1\} Otra forma de iniciar los servicios puede ser con el comando service que implementan algunas distribuciones de fedora y ubuntu que están basados en sysvinit(\{3\} controla el arranque de programas en el instante de inicio del sistema):
+\begin{center}
+\begin{verbatim}
+service httpd stop
+service httpd start
+service httpd restart
+\end{verbatim}
+\end{center}
+Sin embargo ahora se usa una systemd en muchas distribuciones de fedora reemplazando la forma de trabajo de sysvinit, y aunque se mantiene la funcionalidad del comando service es como si se usara un alias para los siguientes comandos:
+\begin{center}
+\begin{verbatim}
+systemctl start httpd.service
+systemctl stop httpd.service
+systemctl restart httpd.service
+\end{verbatim}
+\end{center}
+Dependiendo de la distribución no es necesario acabar con ".service".
+\section{Cuestión 9}
+Ponga de manifiesto el funcionamiento de PHP en Apache creando un fichero php que presente su nombre y apellidos y accediéndolo con un navegador web Presente la captura de pantalla del resultado. Ponga de manifiesto el funcionamiento de MySQL accediendo a la BBDDs por defecto (mysql) y consultando los usuarios definidos en el sistema (select * from user). Documente con capturas de pantalla el acceso y resultado de la consulta.\\
+\textbf{Solución:}\\
+En primer lugar es necesario instalar los servicios mysql y apache y además php para ello, como hacemos uso de la máquina virtual con CentOS, usamos el comando yum para instalarlos:
+\begin{verbatim}
+yum install httpd
+yum install mariadb
+yum install php php-mysql
+\end{verbatim}
+Cada uno sirve para instalar un servicio, mariadb es el paquete que contiene a mysql en fedora, ahora tan solo es necesario iniciarlos con los comandos que aparecen en la figura 8.
+Ahora nos dirigimos a la carpeta \textit{/var/www/html/} y creamos un nuevo archivo llamado \textit{index.php} y lo editamos para que contenga nuestro nombre y apellidos, figura 9. Seguramente es necesario reiniciar el servidor de Apache por lo que usamos \textit{service httpd restart} para ello, y por último nos dirigimos al navegador y usamos la dirección http://localhost y nos aparece la web modificada como vemos en la figura 10.
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{lamp1} 
+\caption{Iniciando los servicios http y mysql.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{lamp2} 
+\caption{Añadiendo al archivo index.php contenido.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{lamp3} 
+\caption{php funcionando en un servidor apache.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+
+\pagebreak
+Ahora para ver que mysql funciona tan solo tenemos que abrir mysql con la linea de comando \textit{mysql -u root -p} para que nos pregunte el password, para establecer una contraseña hay que realizar una instalación segura justo despues de instalar el servicio, al acceder tendremos que mirar nuestras bases de datos y hacer uso de alguna como vemos en la figura 11.
+Por último vemos que la consulta \textit{select * from user} funciona correctamente y tiene 3 entradas en la figura 12-13.
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{sql1} 
+\caption{Ejecutando mysql en la terminal y seleccionando una db.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{sql2} 
+\caption{Ejecutando la consulta pedida(1).} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{sql3} 
+\caption{Ejecutando la consulta pedida(2).} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\section{Cuestión 10}
+Para poner de manifiesto que el servidor está funcionando, acceda con un navegador web a su propio equipo (localhost). Cree una página HTML básica con su nombre y apellidos y publíquela en su servidor IIS. Muestre, con una captura de pantalla, como accede a dicha página con el navegador web.\\
+\textbf{Solución:}\\
+
+Procedimiento obtenido de \{1\}.\\
+
+En primer lugar tenemos que instalar en nuestro servidor IIS para ello, pulsamos en agregar roles y caracteristicas en la pestaña de Administración de nuestro panel de administración de servidores (figura 14). Elegimos instalación basada en características o roles y posteriormente elegimos nuestro equipo como destino (figura 15). Ahora elegimos el rol de servidor web IIS (figura 16) para que se proceda a su instalación (figura 17).\\
+
+Una vez instalado, podremos acceder a la web establecida por defecto para comprobar que la instalación se ha llevado a cabo con éxito, para ello accedemos a http://localhost y podremos ver una web de windows (figura 18). Ahora tenemos que configurar nuestra propia web, para ello accedemos al administrador de IIS a través de la pestaña Herramientas de nuestro panel y nos dirigimos a nuestro equipo (figura 19) donde tendremos que agregar una nueva web (figura 20-21) seleccionando nuestro directorio donde tengamos alojado nuestro archivo llamado index.html (contenido figura 26). Por último tenemos que modificar los permisos de la carpeta que contiene nuestra web puesto que IIS crea un usuario por defecto y tenemos que agregarlo a la lista de permisos (figura 22-24), reiniciamos nuestra web y deberia mostrarse nuestra web (figura 25).
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis1} 
+\caption{Asistente de agregación de roles y caracteristicas de WS 2012.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis2} 
+\caption{Selección de equipo.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis3} 
+\caption{Selección del rol de servidor en especifico servidor web IIS.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis4} 
+\caption{Instalación de IIS.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis5} 
+\caption{servidor web IIS funcionando.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis6} 
+\caption{Administradoe de web IIS.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis7} 
+\caption{Agragar una nueva web.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis8} 
+\caption{Panel para agregar la web.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=0.6\linewidth]{iis9} 
+\caption{Permisos de la carpeta donde este alojada la web.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=0.6\linewidth]{iis10} 
+\caption{Usuarios y grupos con permisos.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=0.6\linewidth]{iis11} 
+\caption{Usuaruo IUSR agregado a los permisos.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis12} 
+\caption{Web personal funcionando.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{iis13} 
+\caption{Código HTML usado.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\section{Cuestión 11}
+Escriba un breve contenido en un fichero de texto plano, cópielo y modifíquelo ligeramente en un segundo archivo, por ejemplo, añadiendo un par de líneas. Calcule las diferencias entre el fichero original y el modificado. Indique los comandos necesarios para aplicar el parche así generado sobre el primer archivo y obtener el segundo. Documente el proceso con capturas de pantalla de cada paso.\\
+\textbf{Solución:}\\
+Procedimiento obtenido de \{1\} y man diff.
+El comando diff sirve para crear un archivo que muestra las diferencias entre dos archivos, las lineas eliminadas aparecen xon un simbolo - delante y las añadidas con un +, además este archivo tiene las fechas de modificación de ambos archivos y algunos datos más (figura 30).\\
+El procedimiento a seguir sería crear el parche con el comando diff (figura 29) haciendo uso de dos versiones de un archivo (figura 27-28) y por último aplicar el parche para obtener un archivo con el contenido tal y como se ve en su copia (figura 31). 
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{pat1} 
+\caption{Archivo con el contenido sin modificar (antiguo).} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{pat2} 
+\caption{Archivo con el contenido modificado (nuevo).} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{pat4} 
+\caption{Creación del parche con diff y parcheado con patch.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{pat3} 
+\caption{Contenido del parche.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{pat5} 
+\caption{Contenido de archivo despues de aplicar el parche.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\section{Cuestión 12}
+Realice la instalación de esta aplicación y pruebe a modificar algún parámetro de algún servicio. Muestre las capturas de el proceso de modificación y ponga de manifiesto el resultado.
+\textbf{Solución:}\\
+El proceso de instalación de la aplicación Webmin se ha basado en la referencia \{1\}. Para instalar Webmin se han seguido los siguientes pasos:
+\begin{enumerate}
+\item Se ha creado un nuevo repositorio llamado webmin.repo que se ha agregado al directorio de repositorios de yum con el seguiente contenido:
+\begin{verbatim}
+[Webmin]
+name=Webmin Distribution Neutral
+#baseurl=http://download.webmin.com/download/yum
+mirrorlist=http://download.webmin.com/download/yum/mirrorlist
+enabled=1
+\end{verbatim}
+\item Se instala la clave GPG de webmin con el siguiente comando:
+\begin{verbatim}
+rpm --import http://www.webmin.com/jcameron-key.asc
+\end{verbatim}
+\item Se procede a la instalación haciendo uso de yum:
+\begin{verbatim}
+yum check-update
+yum install webmin -y
+\end{verbatim}
+\item Por último se inicia el servicio de webmin que se encuentra a la escucha por el puerto 10000:
+\begin{verbatim}
+service webmin start
+\end{verbatim}
+\item Por último se procederá a modificar el servicio ssh actualmente escuchando por el puerto 22 para que lo haga por el puerto 2222.
+\end{enumerate}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{12_1} 
+\caption{Webmin instalado con éxito.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{12_2} 
+\caption{Inicio de Webmin.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\newpage
+
+
+En primer lugar nos dirigimos a servidores y seleccionamos SSH server (figura 34), ahora bien seleccionamos editar archivos de configuración y veremos el archivo \textit{sshd\_config}, donde podremos editar el puerto como vemos está comentado para que se tome el puerto por defecto (figura 35), lo modificamos (figura 36) y por último aplicamos los cambios para que se reinicie el servicio sshd (figura 37). Ya tenemos acceso al servicio ssh desde la otra máquina virtual a traves del puerto 2222.
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{12_3} 
+\caption{Webmin: servidor SSH.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{12_4} 
+\caption{Webmin: Editar archivos de configuración.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{12_5} 
+\caption{Webmin: Editar archivos de configuración(2).} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{12_6} 
+\caption{Webmin: Aplicando cambios.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\begin{figure}[h]
+\centering 
+\includegraphics[width=1\linewidth]{12_7} 
+\caption{Prueba del cambio de puerto.} 
+\vspace{-0.5cm}
+\label{contexto:figura} 
+\end{figure}
+\pagebreak
+\begin{thebibliography}{X}
+\bibitem{Baz} Cuestión 1:\\ 
+ \textbf{1.}\textbf{Man Yum}\\
+\bibitem{Baz} Cuestión 2:\\ 
+ \textbf{1.}\url{https://docs.fedoraproject.org/es-ES/Fedora_Core/4/html/Software_Management_Guide/sn-yum-proxy-server.html}\\
+  \bibitem{Baz} Cuestión 4:\\ 
+ \textbf{1.}\url{http://manpages.ubuntu.com/manpages/hardy/es/man5/apt.conf.5.html }\\
+  \textbf{2.}\url{http://www.rafalinux.com/?p=904}\\
+ \bibitem{Baz} Cuestión 5:\\ 
+ \textbf{1.}\url{http://es.wikipedia.org/wiki/Secure_Shell}\\
+  \bibitem{Baz} Cuestión 6:\\ 
+ \textbf{1.}\url{http://www.comoinstalarlinux.com/centos-ssh-para-acceder-a-tu-servidor-linux/}\\
+  \textbf{2.}\url{http://www.guia-ubuntu.com/index.php/Servidor_ssh}\\
+    \bibitem{Baz} Cuestión 7:\\ 
+  \textbf{1.}\url{http://www.guia-ubuntu.com/index.php/Servidor_ssh}\\
+  \bibitem{Baz} Cuestión 8:\\ 
+ \textbf{1.}\url{https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet/es}\\
+  \textbf{2.}\url{http://somebooks.es/?p=3429}\\
+  \textbf{3.}\url{http://es.wikipedia.org/wiki/System_V}\\
+\bibitem{Baz} Cuestión 10:\\ 
+ \textbf{1.}\url{https://technet.microsoft.com/es-es/library/hh831515.aspx#Prereqs}\\
+ \bibitem{Baz} Cuestión 11:\\ 
+ \textbf{1.}\url{http://es.wikipedia.org/wiki/Patch_(Unix)}\\
+  \textbf{2.}\textbf{Man diff}\\
+  \bibitem{Baz} Cuestión 12:\\ 
+ \textbf{1.}\url{http://lintut.com/how-to-install-webmin-on-centos-7/}\\
+\end{thebibliography}
+
+\end{document}

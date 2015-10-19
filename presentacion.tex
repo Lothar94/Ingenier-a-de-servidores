@@ -1,0 +1,281 @@
+%%%
+% Plantilla de Presentación
+% Modificación de una plantilla de Latex de LaTeXTemplates para adaptarla 
+% al castellano y a las necesidades de escribir informática y matemáticas.
+%
+% Editada por: Mario Román
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PAQUETES Y CONFIGURACIÓN DEL DOCUMENTO
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+%% Configuración de la presentación
+\mode<presentation> {
+  %%% Selección de estilo
+  % The Beamer class comes with a number of default slide themes
+  % which change the colors and layouts of slides. Below this is a list
+  % of all the themes, uncomment each in turn to see what they look like.
+
+  %\usetheme{default}
+  %\usetheme{AnnArbor}
+  %\usetheme{Antibes}
+  %\usetheme{Bergen}
+  %\usetheme{Berkeley}
+  %\usetheme{Berlin}
+  %\usetheme{Boadilla}
+  %\usetheme{CambridgeUS}
+  %\usetheme{Copenhagen}
+  %\usetheme{Darmstadt}
+  %\usetheme{Dresden}
+  %\usetheme{Frankfurt}
+  %\usetheme{Goettingen}
+  %\usetheme{Hannover}
+  %\usetheme{Ilmenau}
+  %\usetheme{JuanLesPins}
+  %\usetheme{Luebeck}
+  \usetheme{Madrid}
+  %\usetheme{Malmoe}
+  %\usetheme{Marburg}
+  %\usetheme{Montpellier}
+  %\usetheme{PaloAlto}
+  %\usetheme{Pittsburgh}
+  %\usetheme{Rochester}
+  %\usetheme{Singapore}
+  %\usetheme{Szeged}
+  %\usetheme{Warsaw}
+
+  %% Selección de color
+  % As well as themes, the Beamer class has a number of color themes
+  % for any slide theme. Uncomment each of these in turn to see how it
+  % changes the colors of your current slide theme.
+
+  %\usecolortheme{albatross}
+  %\usecolortheme{beaver}
+  %\usecolortheme{beetle}
+  %\usecolortheme{crane}
+  %\usecolortheme{dolphin}
+  %\usecolortheme{dove}
+  %\usecolortheme{fly}
+  %\usecolortheme{lily}
+  %\usecolortheme{orchid}
+  %\usecolortheme{rose}
+  %\usecolortheme{seagull}
+  %\usecolortheme{seahorse}
+  %\usecolortheme{whale}
+  %\usecolortheme{wolverine}
+
+  %% Configuración del pie de línea
+  %\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+  %\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+  %\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+%% Fuentes de tamaño arbitrario
+\usepackage{lmodern}
+
+%% Gráficos
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%%% Castellano.
+% noquoting: Permite uso de comillas no españolas.
+% lcroman: Permite la enumeración con numerales romanos en minúscula.
+% fontenc: Usa la fuente completa para que pueda copiarse correctamente del pdf.
+\usepackage[spanish,es-noquoting,es-lcroman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\selectlanguage{spanish}
+
+%----------------------------------------------------------------------------------------
+%	TÍTULO
+%----------------------------------------------------------------------------------------
+
+\title[Seguridad en Apache]{Seguridad en Apache\\ Vulnerabilidades actuales: DoS, CSS} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{} % Your name
+\institute[Universidad de Granada] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+  Universidad de Granada \\ % Your institution for the title page
+  \medskip
+  %\textit{lsotpal@correo.ugr.es\\
+ % oscarbg@correo.ugr.es} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+
+\begin{document}
+
+%% Diapositiva de título.
+\thispagestyle{empty}
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%% Diapositiva de contenidos.
+% Throughout your presentation, if you choose to use \section{} and \subsection{} commands, 
+% these will automatically be printed on this slide as an overview of your presentation
+\thispagestyle{empty}
+\begin{frame}
+  \frametitle{Contenidos} % Table of contents slide, comment this block out to remove it
+  \tableofcontents
+\end{frame}
+
+
+
+%----------------------------------------------------------------------------------------
+%	PRESENTACIÓN
+%----------------------------------------------------------------------------------------
+\setcounter{framenumber}{0}
+
+
+%------------------------------------------------
+\section{Servidor web Apache} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+	\subsection{¿Qué es un servidor web Apache?} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+	\begin{frame}
+	\frametitle{¿Qué es un servidor web Apache?}
+	\begin{itemize}
+		\item  Un \textbf{servidor web} es un programa que procesa una aplicación del lado del servidor y realiza conexiones con un cliente.
+		\item Un \textbf{servidor Apache} es un servidor web HTTP de \textbf{código abierto} y \textbf{multiplataforma} que es usado para la creación de sitios o servicios web.
+		\begin{figure}[H]
+		\centering 
+		\includegraphics[width=0.45\linewidth]{apache} 
+		\vspace{-0.2cm} 
+		\label{contexto:figura} 
+		\end{figure}
+	\end{itemize}
+	\end{frame}
+	
+	\subsection{Seguridad en Apache}
+	\begin{frame}
+	\frametitle{Seguridad en Apache}
+La configuración por defecto de Apache deja al descubierto mucha cantidad de información que pueda ser usado para un posterior ataque. Por ejemplo:
+	\begin{itemize}
+		\item \textbf{Información acerca del servidor}: Normalmente incluso puede conocerse el sistema sobre el que el servidor está trabajando y la versión de este.
+		\item \textbf{Listado de directorios}: En un principio si el servidor es capaz de mostrar una listado de directorios y ficheros que sería necesario bloquear para los visitantes que no poseen permisos de administrador.
+	\end{itemize}
+	Por lo que la primera tarea del administrador del servidor será realizar una adecuada configuración del servicio httpd. 
+	\end{frame}
+
+	\subsection{Tipos y formas de ataque}
+	\begin{frame}
+	\frametitle{Tipos y formas de ataque}
+	\begin{itemize}
+\item \textbf{Information Leakage:} Es una forma de obtener información para posteriormente atacar el servidor web haciendo uso de alguna otra técnica.
+\item \textbf{Bypass:} La idea predominante en este ataque es el de tomar un atajo u otra ruta para saltarse algun tipo de seguridad.
+\item \textbf{DoS:} o Ataque de denegación de servicios, es uno de los más frecuente actualmente consiste en provocar la perdida de conectividad a una red de ordenadores por la sobrecarga de los recursos de la misma.
+\item \textbf{XSS o CSS:} o Cross-site scripting, consiste en aprovechar una inseguridad o agujero de seguridad en una aplicación web para inyectar código JavaScript u otro lenguaje.
+\item \textbf{SQL injection:} La inyección SQL tiene una idea muy parecida a la de XSS intenta acceder a una información contenida en una base de datos.
+\end{itemize}
+	\end{frame}
+
+\section{DoS}
+%------------------------------------------------
+
+	\subsection{¿Qué es un ataque DoS?}
+	\begin{frame}
+	\frametitle{¿Qué es un ataque DoS?}
+	\begin{itemize}
+	
+	\item Un ataque de \textbf{denegación de servicio} se produce cuando un usuario normalmente malintencionado intenta producir la pérdida de conectividad de una red de ordenadores consumiendo algún tipo de recurso limitado.
+	\item El objetivo que se quiere alcanzar es deshabilitar el computador víctima, el nombre a este ataque viene dado por la propuesta:\\
+\textit{	 ''Se pretende negar la capacidad de una institución o empresa para dar servicio a sus usuarios, afiliados o clientes.''}
+	
+	\end{itemize}
+	\end{frame}
+	
+	\subsection{Diferencia entre DDoS y DoS}
+	\begin{frame}
+	\frametitle{Diferencia entre DDoS y DoS}
+	\begin{tabular}{ll}
+	
+	\multicolumn{1}{p{5.5cm}}{\vspace{1cm}
+	Los ataques DDoS son distribuidos, esto quiere decir que no es una sola computadora produciendo peticiones a un servidor sino que el atacante posee unos computadores manejadores que se encargan de que el número de computadores manejados envien simultaneamente peticiones al servidor víctima.}  & \multicolumn{1}{p{5.5cm}}{\begin{center}
+	\includegraphics[scale=0.2]{DDoS2}
+	\end{center}}\\
+	\end{tabular} 
+	\end{frame}
+	
+	\subsection{Principales Métodos de ataque}
+	\begin{frame}
+	\frametitle{Principales Métodos de ataque}
+		\begin{itemize}
+\item \textbf{Consumición de recursos escasos o limitados:} Ancho de banda, memoria, espacio de disco entre otros, incluso condiciones ambientales.
+\begin{itemize}
+\item \textbf{Conexión de Red}.
+\item \textbf{Usar tus propios recursos contra ti}. 
+\item \textbf{Consumición de ancho de banda}. 
+\item \textbf{Consumición de otros recursos}. 
+\end{itemize}
+\item \textbf{Destrucción o alteración de la información de configuración:} Una mala configuración de un servidor puede no operar completamente, un atacante puede alterar o destruir la información para que se impida el acceso directo a una máquina o red.
+\item \textbf{Destrucción o alteración de componenentes físicos:}
+La seguridad física es muy importante a la hora de recibir ataques y prevenirlos, ya que existen computadores que están autorizados a cambiar condiciones ambientales del lugar donde se encuentran los servidores.
+\end{itemize}
+	\end{frame}	
+	
+	\subsection{Prevención y respuesta en Apache}
+	\begin{frame}
+	\frametitle{Prevención y respuesta en Apache}
+		\begin{itemize}
+\item La herramienta más eficaz para evitar ataques DoS es un \textbf{firewall}.
+\item Directiva \textbf{RequestReadTimeout}.
+\item Directiva \textbf{TimeOut}.
+\item Podemos configurar los valores de las siguientes directivas de manera apropiada con el fin de evitar un consumo excesivo de recursos provocada por la entrada de clientes: 
+LimitRequestBody, LimitRequestFields, LimitRequestFieldSize, LimitRequestLine y LimitXMLRequestBody
+\item Directiva \textbf{acceptfilter} (solo disponible en algunos sistemas operativos).
+\item Directiva \textbf{MaxRequestWorkers}.
+\item Por último hacer uso de \textbf{mpm} (multi-Processiong Modules).
+\end{itemize}
+	\end{frame}
+	
+\section{XSS}
+\subsection{¿Qué es un ataque XSS?}
+	\begin{frame}
+	\frametitle{¿Qué es un ataque XSS?}
+		Los ataques de este tipo incluyen normalmente tres partes, el atacante, la web que se va a aprovechar para ejecutar el código malicioso y la victima cliente, la meta que queremos alcanzar es obtener los cookies u otra información que permita la identificación de la victima cliente en la web.
+
+	\end{frame}
+\subsection{Técnica}
+	\begin{frame}
+	\frametitle{Técnica}
+		\begin{figure}[H]
+		\centering 
+		\includegraphics[width=1\linewidth]{reflected-xss} 
+		\vspace{-0.2cm} 
+		\label{contexto:figura} 
+		\end{figure}
+	\end{frame}
+\subsection{Prevención y respuesta}
+	\begin{frame}
+	\frametitle{Prevención y respuesta}
+		\begin{itemize}
+\item \textbf{Filtrado de entrada}: Se filtran las etiquetas que pueden aparecer en un determinado parametro.
+\item \textbf{Filtrado de salida}: Es similar al anterior pero en este caso se filtran los datos en la versión que se envia de vuelta al usuario como respuesta.
+\item \textbf{Instalación de una aplicación firewall}: Se dedica a interceptar los ataques CSS antes de que alcancen el servidor web y los bloquee.  Pueden cubrir todos los métodos de entrada incluyendo las cabeceras HTTP.
+\end{itemize}
+	\end{frame}
+	
+%----------------------------------------------------------------------------------------
+
+\end{document}
